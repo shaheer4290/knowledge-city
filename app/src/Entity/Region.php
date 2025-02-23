@@ -6,31 +6,21 @@ namespace App\Entity;
 
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Relation\HasMany;
 
 #[Entity(table: 'regions')]
 class Region
 {
-    #[Column(type: 'bigPrimary')]
+    #[Column(type: 'bigPrimary', name: 'region_id')]
     public int $regionId;
     
-    #[Column(type: 'string', length: 200)]
+    #[Column(type: 'string', name: 'region_name')]
     public string $regionName;
-    
-    #[HasMany(target: Store::class, innerKey: 'regionId', outerKey: 'regionId')]
-    public array $stores;
-    
-    public function __construct(string $regionName)
-    {
-        $this->regionName = $regionName;
-        $this->stores = [];
-    }
     
     public function toArray(): array
     {
         return [
-            'regionId' => $this->regionId,
-            'regionName' => $this->regionName,
+            'region_id' => $this->regionId,
+            'region_name' => $this->regionName
         ];
     }
 } 

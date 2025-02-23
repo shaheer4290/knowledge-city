@@ -6,39 +6,33 @@ namespace App\Entity;
 
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
 #[Entity(table: 'products')]
 class Product
 {
-    #[Column(type: 'bigPrimary')]
+    #[Column(type: 'bigPrimary', name: 'product_id')]
     public int $productId;
     
-    #[Column(type: 'bigInteger')]
+    #[Column(type: 'bigInteger', name: 'store_id')]
+    public int $storeId;
+    
+    #[Column(type: 'bigInteger', name: 'category_id')]
     public int $categoryId;
     
-    #[Column(type: 'string', length: 200)]
-    public string $productName;
+    #[Column(type: 'string', length: 255)]
+    public string $name;
     
-    #[Column(type: 'bigInteger', name: 'category_categoryId')]
-    public int $categoryCategoryId;
-    
-    #[BelongsTo(target: Category::class, innerKey: 'categoryId', outerKey: 'categoryId')]
-    public Category $category;
-    
-    public function __construct()
-    {
-        // Initialize category_categoryId to match categoryId
-        $this->categoryCategoryId = 0;
-    }
+    #[Column(type: 'decimal(10,2)')]
+    public float $price;
     
     public function toArray(): array
     {
         return [
-            'productId' => $this->productId,
-            'categoryId' => $this->categoryId,
-            'productName' => $this->productName,
-            'categoryCategoryId' => $this->categoryCategoryId
+            'product_id' => $this->productId,
+            'store_id' => $this->storeId,
+            'category_id' => $this->categoryId,
+            'name' => $this->name,
+            'price' => $this->price
         ];
     }
 }

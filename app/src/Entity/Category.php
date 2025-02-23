@@ -6,30 +6,21 @@ namespace App\Entity;
 
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Relation\HasMany;
 
 #[Entity(table: 'categories')]
 class Category
 {
-    #[Column(type: 'bigPrimary')]
+    #[Column(type: 'bigPrimary', name: 'category_id')]
     public int $categoryId;
     
-    #[Column(type: 'string', length: 200)]
+    #[Column(type: 'string', name: 'category_name')]
     public string $categoryName;
-    
-    #[HasMany(target: Product::class, innerKey: 'categoryId', outerKey: 'categoryId')]
-    public array $products;
-    
-    public function __construct()
-    {
-        $this->products = [];
-    }
     
     public function toArray(): array
     {
         return [
-            'categoryId' => $this->categoryId,
-            'categoryName' => $this->categoryName,
+            'category_id' => $this->categoryId,
+            'category_name' => $this->categoryName
         ];
     }
 } 

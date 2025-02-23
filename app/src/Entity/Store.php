@@ -6,20 +6,25 @@ namespace App\Entity;
 
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
 #[Entity(table: 'stores')]
 class Store
 {
-    #[Column(type: 'bigPrimary')]
+    #[Column(type: 'bigPrimary', name: 'store_id')]
     public int $storeId;
     
-    #[Column(type: 'bigInteger')]
+    #[Column(type: 'bigInteger', name: 'region_id')]
     public int $regionId;
     
-    #[Column(type: 'string', length: 200)]
+    #[Column(type: 'string', length: 255, name: 'store_name')]
     public string $storeName;
     
-    #[BelongsTo(target: Region::class, innerKey: 'regionId', outerKey: 'regionId')]
-    public Region $region;
+    public function toArray(): array
+    {
+        return [
+            'store_id' => $this->storeId,
+            'region_id' => $this->regionId,
+            'store_name' => $this->storeName
+        ];
+    }
 }
