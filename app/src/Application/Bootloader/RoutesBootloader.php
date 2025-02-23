@@ -25,7 +25,10 @@ use Spiral\Session\Middleware\SessionMiddleware;
  */
 final class RoutesBootloader extends BaseRoutesBootloader
 {
-    protected const DEPENDENCIES = [AnnotatedRoutesBootloader::class];
+    protected const DEPENDENCIES = [
+        AnnotatedRoutesBootloader::class,
+        \App\Endpoint\Console\SeedDatabaseCommand::class,
+    ];
 
     protected function globalMiddleware(): array
     {

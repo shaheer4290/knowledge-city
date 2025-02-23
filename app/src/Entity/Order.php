@@ -32,8 +32,24 @@ class Order
     #[Column(type: 'bigInteger')]
     public int $storeId;
     
-    #[BelongsTo(target: Store::class, fkAction: 'CASCADE')]
+    #[Column(type: 'bigint', name: 'store_storeId')]
+    public int $store_storeId;
+    
+    #[Column(type: 'bigint', name: 'product_productId')]
+    public int $product_productId;
+    
+    #[BelongsTo(target: Store::class, innerKey: 'storeId', outerKey: 'storeId')]
     public Store $store;
+    
+    #[BelongsTo(target: Product::class, innerKey: 'productId', outerKey: 'productId')]
+    public Product $product;
+    
+    public function __construct()
+    {
+        // Initialize the foreign key fields
+        $this->store_storeId = 0;
+        $this->product_productId = 0;
+    }
     
     public function toArray(): array
     {
@@ -45,6 +61,8 @@ class Order
             'unitPrice' => $this->unitPrice,
             'orderDate' => $this->orderDate->format('Y-m-d'),
             'storeId' => $this->storeId,
+            'store_storeId' => $this->store_storeId,
+            'product_productId' => $this->product_productId
         ];
     }
 }

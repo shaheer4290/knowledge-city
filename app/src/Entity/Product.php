@@ -6,20 +6,39 @@ namespace App\Entity;
 
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Relation\HasMany;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
 #[Entity(table: 'products')]
 class Product
 {
     #[Column(type: 'bigPrimary')]
-    private int $productId;
+    public int $productId;
     
     #[Column(type: 'bigInteger')]
-    private int $categoryId;
+    public int $categoryId;
     
     #[Column(type: 'string', length: 200)]
-    private string $productName;
+    public string $productName;
     
-    #[HasMany(target: Order::class)]
-    private array $orders;
+    #[Column(type: 'bigInteger', name: 'category_categoryId')]
+    public int $categoryCategoryId;
+    
+    #[BelongsTo(target: Category::class, innerKey: 'categoryId', outerKey: 'categoryId')]
+    public Category $category;
+    
+    public function __construct()
+    {
+        // Initialize category_categoryId to match categoryId
+        $this->categoryCategoryId = 0;
+    }
+    
+    public function toArray(): array
+    {
+        return [
+            'productId' => $this->productId,
+            'categoryId' => $this->categoryId,
+            'productName' => $this->productName,
+            'categoryCategoryId' => $this->categoryCategoryId
+        ];
+    }
 }

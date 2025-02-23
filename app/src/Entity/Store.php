@@ -6,20 +6,20 @@ namespace App\Entity;
 
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Relation\HasMany;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
 #[Entity(table: 'stores')]
 class Store
 {
     #[Column(type: 'bigPrimary')]
-    private int $storeId;
+    public int $storeId;
     
     #[Column(type: 'bigInteger')]
-    private int $regionId;
+    public int $regionId;
     
     #[Column(type: 'string', length: 200)]
-    private string $storeName;
+    public string $storeName;
     
-    #[HasMany(target: Order::class)]
-    private array $orders;
+    #[BelongsTo(target: Region::class, innerKey: 'regionId', outerKey: 'regionId')]
+    public Region $region;
 }
